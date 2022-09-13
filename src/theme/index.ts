@@ -1,7 +1,8 @@
-import { ThemeOptions } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { Shadows } from "@material-ui/core/styles/shadows";
+import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
+import { Shadows } from '@material-ui/core/styles/shadows';
 import colors from './colors';
+import typos from './typos';
 
 const spacing = 8;
 
@@ -12,17 +13,14 @@ const index: ThemeOptions = {
   },
   palette: {
     type: 'light',
-    surface: colors.surface,
     background: {
-      default: colors.surface[0],
-      paper: colors.surface[1],
+      default: '#FFFFFF',
+      paper: '#FFFFFF',
     },
     divider: colors.divider,
     text: {
       primary: colors.text.primary,
       secondary: colors.text.secondary,
-      disabled: colors.text.disabled,
-      hint: colors.text.passive,
     },
     action: {
       active: colors.active,
@@ -31,17 +29,13 @@ const index: ThemeOptions = {
     },
     primary: colors.primary,
     secondary: colors.secondary,
-    error: colors.error,
-    warning: colors.warning,
-    info: colors.info,
-    success: colors.success,
-    recipeScore: {
-      good: colors.recipeScore.good,
-      medium: colors.recipeScore.medium,
-      bad: colors.recipeScore.bad,
-      veryBad: colors.recipeScore.veryBad,
-      disabled: colors.recipeScore.disabled,
-    },
+  },
+  typography: {
+    fontFamily: 'sans-serif',
+    h3: typos.header,
+    h6: typos.tiny,
+    subtitle1: typos.subtitle,
+    body1: typos.body1,
   },
   shadows: Array(25).fill('none') as Shadows,
   overrides: {

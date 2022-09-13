@@ -1,16 +1,7 @@
 export default {
-  surface: [
-    '#FFFFFF',
-    '#F7F7F7',
-    '#E9E9E9',
-    '#DADADA',
-    '#CACACA',
-  ],
   text: {
-    primary: 'rgba(0, 0, 0, 1)',
-    secondary: 'rgba(0, 0, 0, 0.7)',
-    passive: 'rgba(0, 0, 0, 0.5)',
-    disabled: 'rgba(0, 0, 0, 0.38)',
+    primary: '#555555',
+    secondary: '#777777',
   },
   active: 'rgba(0, 0, 0, 0.05)',
   divider: 'rgba(0, 0, 0, 0.08)',
@@ -19,15 +10,15 @@ export default {
     itemHighlight: 'rgba(0, 0, 0, 0.08)',
   },
   primary: {
-    main: '#00A0FF',
-    dark: '#0088D9',
-    light: '#34B3FF',
+    main: '#02A69D',
+    dark: '#009c92',
+    light: '#00A69C',
     contrastText: '#FFFFFF',
   },
   secondary: {
-    main: '#F44336',
-    dark: '#CF392E',
-    light: '#F4675D',
+    main: '#797878',
+    dark: '#797878',
+    light: '#797878',
     contrastText: '#FFFFFF',
   },
   error: {
@@ -57,13 +48,5 @@ export default {
   filters: {
     lighten: 'brightness(1.2)',
     darken: 'brightness(0.85)',
-  },
-
-  recipeScore: {
-    good: '#BBFFBB',
-    medium: '#FFFFBB',
-    bad: '#FFCCAA',
-    veryBad: '#FFAAAA',
-    disabled: '#CCCCCC',
   },
 };
