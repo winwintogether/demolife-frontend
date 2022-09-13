@@ -28,4 +28,8 @@ body {
 
 ::-webkit-calendar-picker-indicator {
   opacity: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
 }
