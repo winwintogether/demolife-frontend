@@ -25,3 +25,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #444444;
 }
+
+::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 const useStyles = makeStyles((theme) => ({
   top: {
-    top: `1px solid ${theme.palette.divider}`,
+    borderTop: `1px solid ${theme.palette.divider}`,
     display: 'flex',
     minHeight: 330,
   },

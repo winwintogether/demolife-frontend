@@ -44,14 +44,17 @@ const index: ThemeOptions = {
         '@font-face': [],
       },
     },
-    MuiFilledInput: {
-      root: {
-        borderRadius: 6,
+    MuiButton: {
+      sizeLarge: {
+        padding: '8px 48px',
       },
-      input: {
-        borderRadius: 'inherit',
-        padding: spacing * 2,
-      },
+      label: {
+        fontFamily: 'system-ui',
+        textTransform: 'none',
+        fontSize: 22,
+        fontWeight: 100,
+        lineHeight: '28px',
+      }
     },
     MuiLink: {
       root: {
