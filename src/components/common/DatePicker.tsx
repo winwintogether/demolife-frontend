@@ -11,6 +11,7 @@ const useStyles = makeStyles(() => ({
     '& .MuiInputAdornment-positionEnd': {
       position: 'absolute',
       right: 0,
+      zIndex: -1,
     }
   }
 }));

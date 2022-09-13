@@ -10,6 +10,7 @@ const useStyles = makeStyles(() => ({
     '& .MuiInputAdornment-positionEnd': {
       position: 'absolute',
       right: 0,
+      zIndex: -1,
     }
   }
 }));
@@ -25,7 +26,7 @@ const TimePicker = () => {
       className={classes.textField}
       InputProps={{
         endAdornment: (
-          <InputAdornment position="start">p.m</InputAdornment>
+          <InputAdornment position="end">p.m</InputAdornment>
         ),
       }}
     />
