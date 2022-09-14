@@ -16,6 +16,7 @@ const SelectInput = () => {
     <Select
       className={classes.textField}
       value={10}
+      placeholder="Education"
       onChange={() => {}}
     >
       <MenuItem value={10}>Martic</MenuItem>

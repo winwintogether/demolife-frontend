@@ -8,6 +8,10 @@ const useStyles = makeStyles((theme) => ({
     borderTop: `1px solid ${theme.palette.divider}`,
     display: 'flex',
     minHeight: 330,
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      marginBottom: theme.spacing(3),
+    },
   },
   title: {
     color: theme.palette.primary.main,
@@ -18,8 +22,12 @@ const useStyles = makeStyles((theme) => ({
   },
   section: {
     padding: theme.spacing(3.75, 6.25),
-    maxWidth: 500,
+    maxWidth: '26%',
     width: '100%',
+    [theme.breakpoints.down('md')]: {
+      maxWidth: '100%',
+      padding: theme.spacing(3, 2),
+    },
   },
   firstSection: {
     maxWidth: '100%',
@@ -27,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   middleSection: {
     borderLeft: `1px solid ${theme.palette.divider}`,
     borderRight: `1px solid ${theme.palette.divider}`,
+    [theme.breakpoints.down('md')]: {
+      border: 'none',
+    },
   },
   bottom: {
     padding: theme.spacing(1),

@@ -1,6 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
-import { Shadows } from '@material-ui/core/styles/shadows';
 import colors from './colors';
 import typos from './typos';
 
@@ -31,13 +30,14 @@ const index: ThemeOptions = {
     secondary: colors.secondary,
   },
   typography: {
-    fontFamily: 'sans-serif',
+    fontFamily: 'system-ui',
     h3: typos.header,
     h6: typos.tiny,
-    subtitle1: typos.subtitle,
+    subtitle1: typos.subtitle1,
+    subtitle2: typos.subtitle2,
     body1: typos.body1,
+    body2: typos.body2,
   },
-  shadows: Array(25).fill('none') as Shadows,
   overrides: {
     MuiCssBaseline: {
       '@global': {
@@ -45,8 +45,11 @@ const index: ThemeOptions = {
       },
     },
     MuiButton: {
+      root: {
+        borderRadius: 4,
+      },
       sizeLarge: {
-        padding: '8px 48px',
+        padding: '8px 62px',
       },
       label: {
         fontFamily: 'system-ui',
@@ -59,6 +62,28 @@ const index: ThemeOptions = {
     MuiLink: {
       root: {
         color: colors.info.main,
+      },
+    },
+    MuiFormControlLabel: {
+      label: {
+        color: colors.text.secondary,
+      },
+    },
+    MuiSlider: {
+      thumb: {
+        width: 18,
+        height: 18,
+        marginTop: -8,
+      }
+    },
+    MuiMenuItem: {
+      root: {
+        fontSize: '1.125rem',
+      },
+    },
+    MuiSelect: {
+      icon: {
+        color: colors.text.secondary,
       },
     },
   },

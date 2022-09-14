@@ -1,8 +1,11 @@
 import React from 'react';
 import { Toolbar, AppBar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
 import Link from '@material-ui/core/Link';
-import Logo from '../../assets/images/logo.png';
+import MobileMenu from './MobileMenu';
+// @ts-ignore
+import Logo from 'assets/images/logo.png';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -35,12 +38,17 @@ const Header: React.FC = () => {
           <img className={classes.logo} src={Logo} alt="logo" />
         </Link>
 
-        <div className={classes.links}>
-          <Link className={classes.link} href="/">Home</Link>
-          <Link className={classes.link} href="/">Calculator</Link>
-          <Link className={classes.link} href="/">Products</Link>
-          <Link className={classes.link} href="/">My Policy Dashboard</Link>
-        </div>
+        <Hidden mdUp>
+          <MobileMenu />
+        </Hidden>
+        <Hidden smDown>
+          <div className={classes.links}>
+            <Link className={classes.link} href="/">Home</Link>
+            <Link className={classes.link} href="/">Calculator</Link>
+            <Link className={classes.link} href="/">Products</Link>
+            <Link className={classes.link} href="/">My Policy Dashboard</Link>
+          </div>
+        </Hidden>
       </Toolbar>
     </AppBar>
   )

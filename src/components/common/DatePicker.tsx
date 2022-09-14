@@ -6,8 +6,6 @@ import EventIcon from '@material-ui/icons/Event';
 
 const useStyles = makeStyles(() => ({
   textField: {
-    minWidth: 400,
-
     '& .MuiInputAdornment-positionEnd': {
       position: 'absolute',
       right: 0,
@@ -21,9 +19,12 @@ const DatePicker = () => {
 
   return (
     <TextField
+      className={classes.textField}
       type="date"
-      defaultValue="2017-05-24"
+      // defaultValue="2017-05-24"
       variant="standard"
+      placeholder="Birthdate *"
+      fullWidth
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
@@ -31,7 +32,6 @@ const DatePicker = () => {
           </InputAdornment>
         ),
       }}
-      className={classes.textField}
     />
   )
 }

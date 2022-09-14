@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   font-family: system-ui;
+  font-weight: 300;
 }
 
 body {

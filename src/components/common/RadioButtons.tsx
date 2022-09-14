@@ -4,10 +4,18 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 type Props = {
-  options: Array<{ value: string, label: string }>
+  name: string,
+  color?: 'primary' | 'secondary',
+  options: Array<{ value: string, label: string }>,
+  row?: boolean,
 }
 
-const RadioButtons: React.FC<Props> = ({ options }) => {
+const RadioButtons: React.FC<Props> = ({
+  name,
+  options,
+  row,
+  color = 'secondary'
+}) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // setValue((event.target as HTMLInputElement).value);
@@ -15,14 +23,15 @@ const RadioButtons: React.FC<Props> = ({ options }) => {
 
   return (
     <RadioGroup
-      name="gender1"
+      name={name}
       onChange={handleChange}
+      row={row}
     >
       {options.map((option, index) => (
         <FormControlLabel
           key={index}
           value={option.value}
-          control={<Radio />}
+          control={<Radio color={color} />}
           label={option.label}
         />
       ))}
