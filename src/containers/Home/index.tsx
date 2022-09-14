@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -77,6 +77,21 @@ const useStyles = makeStyles((theme) => ({
 
 const Home: React.FC = () => {
   const classes = useStyles();
+  const [birth, setBirth] = useState('');
+  const [income, setIncome] = useState('');
+  const [education, setEducation] = useState('');
+  const [gender, setGender] = useState(genders[0].value);
+  const [status, setStatus] = useState(smokeStatus[0].value);
+  const [isAgree, setIsAgree] = useState<boolean>(false);
+
+  const handleChangeIncome = (e: React.ChangeEvent<{ value: string }>) => {
+    setIncome(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    // tslint:disable-next-line:no-console
+    console.log('Submitting');
+  }
 
   return (
     <div>
@@ -100,7 +115,7 @@ const Home: React.FC = () => {
       <Container maxWidth="md" className={classes.mainContent}>
         <div className={classes.formControl}>
           <Typography className={classes.label}>What is your birthdate?</Typography>
-          <DatePicker />
+          <DatePicker value={birth} onChangeDate={setBirth} />
           <Typography color="textSecondary" variant="body2">YYYY/MM/DD</Typography>
         </div>
         <div className={classes.formControl}>
@@ -109,6 +124,8 @@ const Home: React.FC = () => {
             variant="standard"
             fullWidth
             placeholder="Income"
+            value={income}
+            onChange={handleChangeIncome}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">p.m</InputAdornment>
@@ -118,30 +135,48 @@ const Home: React.FC = () => {
         </div>
         <div className={classes.formControl}>
           <Typography className={classes.label}>What is your highest education?</Typography>
-          <SelectInput />
+          <SelectInput
+            placeholder="Education"
+            options={[]}
+            value={education}
+            onChangeSelect={setEducation}
+          />
         </div>
 
         <div className={classes.formControl}>
           <Typography className={classes.label}>What is your gender?</Typography>
-          <RadioButtons name="gender" options={genders} />
+          <RadioButtons
+            name="gender"
+            options={genders}
+            value={gender}
+            onChangeRadio={setGender}
+          />
         </div>
 
         <div className={classes.formControl}>
           <Typography className={classes.label}>Smoker Status?</Typography>
-          <RadioButtons name="status" options={smokeStatus} />
+          <RadioButtons
+            name="status"
+            options={smokeStatus}
+            value={status}
+            onChangeRadio={setStatus}
+          />
         </div>
 
         <Box marginBottom={8}>
-          <CheckBox label={(
-            <Typography>
-              I agree to share my personal information in line with the&nbsp;
-              <Link className={classes.link} href="#">privacy policy</Link>
-              .
-            </Typography>
-          )} />
+          <CheckBox
+            label={(
+              <Typography>
+                I agree to share my personal information in line with the&nbsp;
+                <Link className={classes.link} href="#">privacy policy</Link>.
+              </Typography>
+            )}
+            checked={isAgree}
+            onChangeCheck={setIsAgree}
+          />
         </Box>
 
-        <Button color="primary">Get a Quote</Button>
+        <Button onClick={handleSubmit} color="primary">Get a Quote</Button>
 
         <LifeCoverBox />
       </Container>

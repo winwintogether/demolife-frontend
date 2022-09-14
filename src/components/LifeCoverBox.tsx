@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -72,12 +72,26 @@ const useStyles = makeStyles((theme) => ({
 
 const LifeCoverBox = () => {
   const classes = useStyles();
+  const [type, setType] = useState('Cover');
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    mobile: '',
+  });
+
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setUser({
+      ...user,
+      [name]: value,
+    })
+  }
 
   return (
     <div className={classes.root}>
       <div className={classes.header}>
         <Typography color="textSecondary" variant="subtitle2">
-          Life Cover of&nbsp;
+          {`Life ${type} of `}
           <Typography variant="subtitle2" component="span" color="primary">Ð1,25,000&nbsp;</Typography>
           for&nbsp;
           <Typography variant="subtitle2" component="span" color="primary">Ð23&nbsp;</Typography>
@@ -94,27 +108,53 @@ const LifeCoverBox = () => {
           <RadioButtons
             name="type"
             options={[
-              { value: 'cover', label: 'Cover or' },
-              { value: 'premium', label: 'Premium' },
+              { value: 'Cover', label: 'Cover or' },
+              { value: 'Premium', label: 'Premium' },
             ]}
             row
             color="primary"
+            value={type}
+            onChangeRadio={setType}
           />
         </div>
         <SlideController />
         <Grid className={classes.textFields} container spacing={4}>
           <Grid item md={3} sm={12} xs={12}>
-            <TextField variant="standard" placeholder="Name" fullWidth />
+            <TextField
+              variant="standard"
+              placeholder="Name"
+              fullWidth
+              name="name"
+              value={user.name}
+              onChange={handleChangeInput}
+            />
           </Grid>
           <Grid item md={5} sm={12} xs={12}>
-            <TextField variant="standard" placeholder="Email" fullWidth />
+            <TextField
+              variant="standard"
+              placeholder="Email"
+              fullWidth
+              name="email"
+              value={user.email}
+              onChange={handleChangeInput}
+            />
           </Grid>
           <Grid item md={4} sm={12} xs={12}>
-            <TextField variant="standard" placeholder="Mobile Number" fullWidth />
+            <TextField
+              variant="standard"
+              placeholder="Mobile Number"
+              fullWidth
+              name="mobile"
+              value={user.mobile}
+              onChange={handleChangeInput}
+            />
           </Grid>
         </Grid>
         <div className={classes.action}>
-          <Button color="primary">
+          <Button
+            disabled={!user.name || !user.email || !user.mobile}
+            color="primary"
+          >
             Continue
             <ArrowForwardIosIcon fontSize="small" />
           </Button>

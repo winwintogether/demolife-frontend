@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import Button from "@material-ui/core/Button";
@@ -33,14 +33,30 @@ const useStyles = makeStyles((theme) => ({
 
 const SlideController = () => {
   const classes = useStyles();
+  const [value, setValue] = useState<number>(30);
+
+  const handleChange = (_event: any, newValue: number | number[]) => {
+    setValue(newValue as number);
+  };
+
+  const handleIncrease = () => {
+    setValue(Math.min(100, value + 5));
+  };
+
+  const handleDecrease = () => {
+    setValue(Math.max(0, value - 5));
+  };
 
   return (
     <div className={classes.root}>
-      <Button className={classes.button}>
+      <Button className={classes.button} onClick={handleDecrease}>
         <RemoveIcon />
       </Button>
       <div className={classes.sliderWrapper}>
-        <Slider />
+        <Slider
+          value={value}
+          onChange={handleChange}
+        />
         <div className={classes.info}>
           <Typography
             color="textSecondary"
@@ -54,7 +70,7 @@ const SlideController = () => {
           >Ð1,250,000</Typography>
         </div>
       </div>
-      <Button className={classes.button}>
+      <Button className={classes.button} onClick={handleIncrease}>
         <AddIcon />
       </Button>
     </div>

@@ -8,17 +8,21 @@ type Props = {
   color?: 'primary' | 'secondary',
   options: Array<{ value: string, label: string }>,
   row?: boolean,
+  value: string,
+  onChangeRadio: (value: string) => void,
 }
 
 const RadioButtons: React.FC<Props> = ({
   name,
   options,
   row,
-  color = 'secondary'
+  color = 'secondary',
+  value,
+  onChangeRadio,
 }) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setValue((event.target as HTMLInputElement).value);
+    onChangeRadio((event.target as HTMLInputElement).value);
   };
 
   return (
@@ -26,6 +30,7 @@ const RadioButtons: React.FC<Props> = ({
       name={name}
       onChange={handleChange}
       row={row}
+      value={value}
     >
       {options.map((option, index) => (
         <FormControlLabel

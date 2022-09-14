@@ -14,14 +14,27 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const DatePicker = () => {
+type Props = {
+  value: string,
+  onChangeDate: (value: string) => void,
+};
+
+const DatePicker: React.FC<Props> = ({
+  value,
+  onChangeDate,
+}) => {
   const classes = useStyles();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeDate(event.target.value)
+  }
 
   return (
     <TextField
       className={classes.textField}
       type="date"
-      // defaultValue="2017-05-24"
+      value={value}
+      onChange={handleChange}
       variant="standard"
       placeholder="Birthdate *"
       fullWidth

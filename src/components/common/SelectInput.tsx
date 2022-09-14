@@ -9,19 +9,37 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const SelectInput = () => {
+type Props = {
+  options: Array<{ value: string, label: string }>,
+  value: string,
+  onChangeSelect: (value: string) => void,
+  placeholder: string,
+}
+
+const SelectInput: React.FC<Props> = ({
+  options,
+  value,
+  placeholder,
+  onChangeSelect,
+}) => {
   const classes = useStyles();
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    onChangeSelect(event.target.value as string);
+  };
 
   return (
     <Select
       className={classes.textField}
-      value={10}
-      placeholder="Education"
-      onChange={() => {}}
+      value={value}
+      placeholder={placeholder}
+      onChange={handleChange}
     >
-      <MenuItem value={10}>Martic</MenuItem>
-      <MenuItem value={20}>Twenty</MenuItem>
-      <MenuItem value={30}>Thirty</MenuItem>
+      {options.map((item, index) => (
+        <MenuItem key={index} value={item.value}>
+          {item.label}
+        </MenuItem>
+      ))}
     </Select>
   )
 }
