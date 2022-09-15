@@ -1,14 +1,9 @@
 import {createStore, applyMiddleware, combineReducers} from 'redux'
 import {useSelector as reduxUseSelector} from 'react-redux'
 import thunk from 'redux-thunk'
-import { StoreType } from "./types";
+import { StoreType } from './types';
 
-import userReducer from './reducers/user.reducer'
-
-
-export default createStore(combineReducers({
-  user: userReducer
-}), applyMiddleware(thunk))
+export default createStore(combineReducers({}), applyMiddleware(thunk))
 
 export * from 'react-redux'
 

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
-import Button from "@material-ui/core/Button";
+import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import Typography from "@material-ui/core/Typography";
+import Typography from '@material-ui/core/Typography';
+import { currency } from '../util';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,21 +31,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type Props = {
+  value: number;
+  step: number;
+  min: number;
+  max: number;
+  onChangeSlider: (value: number) =>  void;
+}
 
-const SlideController = () => {
+const SlideController: React.FC<Props> = ({
+  value,
+  step,
+  min,
+  max,
+  onChangeSlider,
+}) => {
   const classes = useStyles();
-  const [value, setValue] = useState<number>(30);
 
   const handleChange = (_event: any, newValue: number | number[]) => {
-    setValue(newValue as number);
+    onChangeSlider(newValue as number);
   };
 
   const handleIncrease = () => {
-    setValue(Math.min(100, value + 5));
+    onChangeSlider(Math.min(max, value + step));
   };
 
   const handleDecrease = () => {
-    setValue(Math.max(0, value - 5));
+    onChangeSlider(Math.max(min, value - step));
   };
 
   return (
@@ -56,18 +69,21 @@ const SlideController = () => {
         <Slider
           value={value}
           onChange={handleChange}
+          step={step}
+          min={min}
+          max={max}
         />
         <div className={classes.info}>
           <Typography
             color="textSecondary"
             variant="body1"
             component="span"
-          >Ð12,500</Typography>
+          >{`Ð${currency(min)}`}</Typography>
           <Typography
             color="textSecondary"
             variant="body1"
             component="span"
-          >Ð1,250,000</Typography>
+          >{`Ð${currency(max)}`}</Typography>
         </div>
       </div>
       <Button className={classes.button} onClick={handleIncrease}>

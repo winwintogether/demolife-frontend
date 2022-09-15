@@ -6,8 +6,10 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { currency } from '../util';
 import RadioButtons from './common/RadioButtons';
 import SlideController from './SlideController';
+import { CoverOptionItem, LeadFormData } from 'types/main';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,14 +72,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LifeCoverBox = () => {
+const defaultSlider = {
+  min: 100000,
+  max: 5000000,
+  step: 100000,
+};
+
+type Props = {
+  coverOptions: CoverOptionItem[];
+  income: string;
+  onSubmit: (value: LeadFormData) =>  void;
+};
+
+const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
   const classes = useStyles();
-  const [type, setType] = useState('Cover');
+  const [type, setType] = useState<'Cover' | 'Premium'>('Cover');
+  const [slider, setSlider] = useState(defaultSlider);
   const [user, setUser] = useState({
     name: '',
     email: '',
     mobile: '',
   });
+  const [amount, setAmount] = useState(400000);
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -85,16 +101,43 @@ const LifeCoverBox = () => {
       ...user,
       [name]: value,
     })
+  };
+
+  const handleChangeType = (value: 'Cover' | 'Premium') => {
+    if (value === 'Cover') {
+      setSlider(defaultSlider);
+    } else {
+      const len = coverOptions.length;
+      if (len) {
+        setSlider({
+          step: 100000,
+          max: coverOptions[0].cover_amount,
+          min: coverOptions[len - 1].cover_amount,
+        })
+      }
+    }
+
+    setType(value);
   }
+
+  const handleSubmit = () => {
+    onSubmit({
+      first_name: user.name,
+      last_name: user.name,
+      email: user.email,
+      cell_no: user.mobile,
+      amount,
+    });
+  };
 
   return (
     <div className={classes.root}>
       <div className={classes.header}>
         <Typography color="textSecondary" variant="subtitle2">
           {`Life ${type} of `}
-          <Typography variant="subtitle2" component="span" color="primary">Ð1,25,000&nbsp;</Typography>
+          <Typography variant="subtitle2" component="span" color="primary">{`Ð${currency(amount)} `}</Typography>
           for&nbsp;
-          <Typography variant="subtitle2" component="span" color="primary">Ð23&nbsp;</Typography>
+          <Typography variant="subtitle2" component="span" color="primary">{`Ð${currency(income)} `}</Typography>
           pm*
         </Typography>
         <CloseIcon fontSize="small" color="secondary" />
@@ -114,10 +157,16 @@ const LifeCoverBox = () => {
             row
             color="primary"
             value={type}
-            onChangeRadio={setType}
+            onChangeRadio={handleChangeType}
           />
         </div>
-        <SlideController />
+        <SlideController
+          value={amount}
+          onChangeSlider={setAmount}
+          step={slider.step}
+          min={slider.min}
+          max={slider.max}
+        />
         <Grid className={classes.textFields} container spacing={4}>
           <Grid item md={3} sm={12} xs={12}>
             <TextField
@@ -154,6 +203,7 @@ const LifeCoverBox = () => {
           <Button
             disabled={!user.name || !user.email || !user.mobile}
             color="primary"
+            onClick={handleSubmit}
           >
             Continue
             <ArrowForwardIosIcon fontSize="small" />
@@ -164,4 +214,4 @@ const LifeCoverBox = () => {
   )
 };
 
-export default LifeCoverBox;
+export default LifeBox;

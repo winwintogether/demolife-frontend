@@ -9,7 +9,7 @@ type Props = {
   options: Array<{ value: string, label: string }>,
   row?: boolean,
   value: string,
-  onChangeRadio: (value: string) => void,
+  onChangeRadio: (value: any) => void,
 }
 
 const RadioButtons: React.FC<Props> = ({

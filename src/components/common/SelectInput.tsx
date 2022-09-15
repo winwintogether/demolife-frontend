@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
 type Props = {
   options: Array<{ value: string, label: string }>,
   value: string,
-  onChangeSelect: (value: string) => void,
+  onChangeSelect: (value: any) => void,
   placeholder: string,
 }
 

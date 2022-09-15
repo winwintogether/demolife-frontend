@@ -5,16 +5,21 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Link from '@material-ui/core/Link';
+import { Box } from '@material-ui/core';
+import moment from 'moment';
 import DatePicker from 'components/common/DatePicker';
 import SelectInput from 'components/common/SelectInput';
 import RadioButtons from 'components/common/RadioButtons';
 import CheckBox from 'components/common/CheckBox';
-import Link from '@material-ui/core/Link';
-import LifeCoverBox from 'components/LifeCoverBox';
-import { genders, smokeStatus } from './constants';
+import LifeBox from 'components/LifeBox';
+import mainService from 'service/main.service';
+import { educations, genders, smokeStatus } from './constants';
+import { Education, Gender, Smoker, CoverOptionItem, LeadFormData } from 'types/main';
+import { Lead, Premium, PremiumResponse } from 'types/api';
+import config from 'config';
 // @ts-ignore
 import BackgroundImage from 'assets/images/demo-life-head-desktop.jpg';
-import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   hero: {
@@ -79,19 +84,75 @@ const Home: React.FC = () => {
   const classes = useStyles();
   const [birth, setBirth] = useState('');
   const [income, setIncome] = useState('');
-  const [education, setEducation] = useState('');
-  const [gender, setGender] = useState(genders[0].value);
-  const [status, setStatus] = useState(smokeStatus[0].value);
+  const [education, setEducation] = useState<Education>(Education.matric);
+  const [gender, setGender] = useState<Gender>(Gender.male);
+  const [status, setStatus] = useState<Smoker>(Smoker.nonSmoker);
   const [isAgree, setIsAgree] = useState<boolean>(false);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isShowLifeBox, setIsShowLifeBox] = useState<boolean>(false);
+  const [coverOptions, setCoverOptions] = useState<CoverOptionItem[]>([]);
+
   const handleChangeIncome = (e: React.ChangeEvent<{ value: string }>) => {
-    setIncome(e.target.value);
+    if (!isNaN(Number(e.target.value))) {
+      setIncome(e.target.value);
+    }
   };
 
   const handleSubmit = () => {
-    // tslint:disable-next-line:no-console
-    console.log('Submitting');
-  }
+    const age = moment().diff(moment(birth), 'y');
+
+    const data: Premium = {
+      account_id: config.accountId,
+      product_code: config.productCode,
+      age,
+      gender,
+      smoker: status,
+      income_gross_monthly: Number(income),
+      education,
+      campaign_id: config.campaignId,
+      cover_amount: 1000000,
+      step: 100000,
+    };
+
+    setIsLoading(true);
+    mainService.quickPremium(data)
+      .then((response: PremiumResponse) => {
+        setCoverOptions(response.cover_options);
+        setIsLoading(false);
+        setIsShowLifeBox(true);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleLeadStart = async (data: LeadFormData) => {
+    const age = moment().diff(moment(birth), 'y');
+
+    const payload: Lead = {
+      account_id: config.accountId,
+      campaign_id: config.campaignId,
+      provider: {
+        id: config.providerId,
+      },
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: config.email,
+      cell_no: data.cell_no,
+      query: {
+        age,
+        cover_amount: data.amount,
+        education,
+        gender,
+        income_gross_monthly: Number(income),
+        product_code: config.productCode,
+        smoker: status,
+      },
+    };
+
+    await mainService.leadStart(payload);
+  };
 
   return (
     <div>
@@ -116,12 +177,13 @@ const Home: React.FC = () => {
         <div className={classes.formControl}>
           <Typography className={classes.label}>What is your birthdate?</Typography>
           <DatePicker value={birth} onChangeDate={setBirth} />
-          <Typography color="textSecondary" variant="body2">YYYY/MM/DD</Typography>
+          <Typography color="textSecondary" variant="body2">MM/DD/YYYY</Typography>
         </div>
         <div className={classes.formControl}>
           <Typography className={classes.label}>What is your monthly income?</Typography>
           <TextField
             variant="standard"
+            type="text"
             fullWidth
             placeholder="Income"
             value={income}
@@ -137,7 +199,7 @@ const Home: React.FC = () => {
           <Typography className={classes.label}>What is your highest education?</Typography>
           <SelectInput
             placeholder="Education"
-            options={[]}
+            options={educations}
             value={education}
             onChangeSelect={setEducation}
           />
@@ -176,9 +238,21 @@ const Home: React.FC = () => {
           />
         </Box>
 
-        <Button onClick={handleSubmit} color="primary">Get a Quote</Button>
+        <Button
+          onClick={handleSubmit}
+          color="primary"
+          disabled={!isAgree || !birth || !income || isLoading}
+        >
+          Get a Quote
+        </Button>
 
-        <LifeCoverBox />
+        {isShowLifeBox && (
+          <LifeBox
+            income={income}
+            coverOptions={coverOptions}
+            onSubmit={handleLeadStart}
+          />
+        )}
       </Container>
     </div>
   )

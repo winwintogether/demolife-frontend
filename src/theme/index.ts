@@ -78,7 +78,7 @@ const index: ThemeOptions = {
     },
     MuiMenuItem: {
       root: {
-        fontSize: '1.125rem',
+        fontSize: '1rem',
       },
     },
     MuiSelect: {

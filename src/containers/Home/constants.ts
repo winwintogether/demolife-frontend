@@ -1,25 +1,62 @@
+import { Education, Gender, Smoker } from 'types/main';
+
 export const genders = [
   {
-    value: 'female',
-    label: 'Female'
+    value: Gender.male,
+    label: 'Male'
   },
   {
-    value: 'male',
-    label: 'Male'
-  }
+    value: Gender.female,
+    label: 'Female'
+  },
 ];
 
 export const smokeStatus = [
   {
-    value: 'smoker',
+    value: Smoker.nonSmoker,
+    label: 'Non-Smoker'
+  },
+  {
+    value: Smoker.smoker,
     label: 'Smoker'
   },
   {
-    value: 'never',
-    label: 'I have never smoked'
+    value: Smoker.exSmoker,
+    label: 'Ex-smoker'
+  },
+];
+
+export const educations = [
+  {
+    value: Education.no,
+    label: 'No Matric'
   },
   {
-    value: 'ex_smoker',
-    label: 'Ex - smoker'
+    value: Education.matric,
+    label: 'Matric'
   },
+  {
+    value: Education.certificate,
+    label: 'Matric Certificate'
+  },
+  {
+    value: Education['3yrDip'],
+    label: 'Matric 3YR Diploma'
+  },
+  {
+    value: Education['4yrDip'],
+    label: 'Matric 4YR Diploma'
+  },
+  {
+    value: Education.degree3yr,
+    label: 'Degree 3YR'
+  },
+  {
+    value: Education.degree4yr,
+    label: 'Degree 4YR'
+  },
+  {
+    value: Education.degreePostGrad,
+    label: 'Degree Post Grad'
+  }
 ];
