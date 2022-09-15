@@ -22,7 +22,7 @@ export enum Education {
 
 export type CoverOptionItem = {
   cover_amount: number;
-  monthly_premium: 19.21;
+  monthly_premium: number;
 }
 
 export type LeadFormData = {
@@ -31,4 +31,9 @@ export type LeadFormData = {
   email: string;
   cell_no: string;
   amount: number;
+}
+
+export enum LeadType {
+  cover = 'Cover',
+  premium = 'Premium'
 }

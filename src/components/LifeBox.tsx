@@ -9,7 +9,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { currency } from '../util';
 import RadioButtons from './common/RadioButtons';
 import SlideController from './SlideController';
-import { CoverOptionItem, LeadFormData } from 'types/main';
+import { CoverOptionItem, LeadFormData, LeadType } from 'types/main';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,6 +72,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const typeOptions = [
+  {
+    value: LeadType.cover,
+    label: 'Cover or'
+  },
+  {
+    value: LeadType.premium,
+    label: 'Premium'
+  },
+];
+
 const defaultSlider = {
   min: 100000,
   max: 5000000,
@@ -86,14 +97,14 @@ type Props = {
 
 const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
   const classes = useStyles();
-  const [type, setType] = useState<'Cover' | 'Premium'>('Cover');
+  const [type, setType] = useState<LeadType>(LeadType.cover);
   const [slider, setSlider] = useState(defaultSlider);
   const [user, setUser] = useState({
     name: '',
     email: '',
     mobile: '',
   });
-  const [amount, setAmount] = useState(400000);
+  const [amount, setAmount] = useState<number>(400000);
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -103,8 +114,8 @@ const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
     })
   };
 
-  const handleChangeType = (value: 'Cover' | 'Premium') => {
-    if (value === 'Cover') {
+  const handleChangeType = (value: LeadType) => {
+    if (value === LeadType.cover) {
       setSlider(defaultSlider);
     } else {
       const len = coverOptions.length;
@@ -150,10 +161,7 @@ const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
           </Typography>
           <RadioButtons
             name="type"
-            options={[
-              { value: 'Cover', label: 'Cover or' },
-              { value: 'Premium', label: 'Premium' },
-            ]}
+            options={typeOptions}
             row
             color="primary"
             value={type}
