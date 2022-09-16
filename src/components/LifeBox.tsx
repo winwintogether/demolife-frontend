@@ -145,9 +145,10 @@ const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
   }
 
   const handleSubmit = () => {
+    const names = user.name.split(" ");
     onSubmit({
-      first_name: user.name,
-      last_name: user.name,
+      first_name: names[0],
+      last_name: names[1] || "",
       email: user.email,
       cell_no: user.mobile,
       amount,
