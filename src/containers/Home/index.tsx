@@ -138,7 +138,7 @@ const Home: React.FC = () => {
       },
       first_name: data.first_name,
       last_name: data.last_name,
-      email: config.email,
+      email: data.email,
       cell_no: data.cell_no,
       query: {
         age,
