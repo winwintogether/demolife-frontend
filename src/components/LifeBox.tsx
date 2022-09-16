@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useEffect, useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
@@ -98,6 +98,7 @@ type Props = {
 const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
   const classes = useStyles();
   const [type, setType] = useState<LeadType>(LeadType.cover);
+  const [target, setTarget] = useState('');
   const [slider, setSlider] = useState(defaultSlider);
   const [user, setUser] = useState({
     name: '',
@@ -105,6 +106,16 @@ const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
     mobile: '',
   });
   const [amount, setAmount] = useState<number>(400000);
+
+  const handleChangeAmount = (value: number) => {
+    if (type === LeadType.premium) {
+      const coverOption: CoverOptionItem | undefined = coverOptions.find(option => option.cover_amount === value);
+      if (coverOption && coverOption.monthly_premium) {
+        setTarget(coverOption.monthly_premium.toString());
+      }
+    }
+    setAmount(value);
+  };
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -117,6 +128,7 @@ const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
   const handleChangeType = (value: LeadType) => {
     if (value === LeadType.cover) {
       setSlider(defaultSlider);
+      setTarget(income);
     } else {
       const len = coverOptions.length;
       if (len) {
@@ -125,6 +137,7 @@ const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
           max: coverOptions[0].cover_amount,
           min: coverOptions[len - 1].cover_amount,
         })
+        setTarget(coverOptions[0].monthly_premium.toString());
       }
     }
 
@@ -141,6 +154,10 @@ const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
     });
   };
 
+  useEffect(() => {
+    setTarget(income)
+  }, [income])
+
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -148,7 +165,7 @@ const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
           {`Life ${type} of `}
           <Typography variant="subtitle2" component="span" color="primary">{`Ð${currency(amount)} `}</Typography>
           for&nbsp;
-          <Typography variant="subtitle2" component="span" color="primary">{`Ð${currency(income)} `}</Typography>
+          <Typography variant="subtitle2" component="span" color="primary">{`Ð${currency(target)} `}</Typography>
           pm*
         </Typography>
         <CloseIcon fontSize="small" color="secondary" />
@@ -170,7 +187,7 @@ const LifeBox: React.FC<Props> = ({ coverOptions, onSubmit, income }) => {
         </div>
         <SlideController
           value={amount}
-          onChangeSlider={setAmount}
+          onChangeSlider={handleChangeAmount}
           step={slider.step}
           min={slider.min}
           max={slider.max}

@@ -151,7 +151,8 @@ const Home: React.FC = () => {
       },
     };
 
-    await mainService.leadStart(payload);
+    const { startUrl } = await mainService.leadStart(payload);
+    document.location.href = startUrl;
   };
 
   return (
