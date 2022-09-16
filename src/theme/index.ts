@@ -59,11 +59,6 @@ const index: ThemeOptions = {
         lineHeight: '28px',
       }
     },
-    MuiLink: {
-      root: {
-        color: colors.info.main,
-      },
-    },
     MuiFormControlLabel: {
       label: {
         color: colors.text.secondary,
@@ -84,8 +79,15 @@ const index: ThemeOptions = {
     MuiSelect: {
       icon: {
         color: colors.text.secondary,
+        fontSize: 30,
       },
     },
+    MuiLink: {
+      root: {
+        color: colors.primary.light,
+        fontWeight: 400,
+      },
+    }
   },
   props: {
     MuiButton: {

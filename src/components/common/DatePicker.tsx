@@ -41,7 +41,7 @@ const DatePicker: React.FC<Props> = ({
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <EventIcon />
+            <EventIcon color="secondary" />
           </InputAdornment>
         ),
       }}

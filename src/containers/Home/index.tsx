@@ -190,7 +190,9 @@ const Home: React.FC = () => {
             onChange={handleChangeIncome}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">p.m</InputAdornment>
+                <InputAdornment position="end">
+                  <Box marginRight={2}>p.m</Box>
+                </InputAdornment>
               ),
             }}
           />
